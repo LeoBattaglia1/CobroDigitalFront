@@ -1,0 +1,67 @@
+/* Estilos para la tabla de ventas */
+.tabla-cobrar {
+  position: relative;
+  right: 220px;
+  width: 55%;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  margin-top: 30px;
+}
+
+/* Estilos para las celdas de la última columna */
+.tabla-cobrar td:last-child {
+  width: 5%;
+}
+
+/* Estilos para las celdas de encabezado */
+.tabla-cobrar th {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  font-size: 22px;
+}
+
+/* Estilos para las filas de la tabla */
+.tabla-cobrar tr {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+/* Estilos para las celdas de datos */
+.tabla-cobrar td {
+  font-size: 20px;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Estilos alternados para filas (opcional) */
+.tabla-cobrar tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Hover sobre las filas (opcional) */
+.tabla-cobrar tr:hover {
+  background-color: #e0e0e0;
+}
+
+.cobranza {
+  position: absolute;
+  border-radius: 10px;
+  border: solid;
+  top: 210px;
+  font-size: 32px;
+  right: 130px;
+}
+
+.cobranza p {
+  text-align: center;
+  background-color: red;
+  padding: 10px;
+  margin-top: 0%;
+}
+
+.cobranza button {
+  padding: 15px;
+}

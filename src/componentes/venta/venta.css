@@ -1,0 +1,203 @@
+.ventas-container {
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilos para el botón de volver */
+.volverInicioV {
+  background: none;
+  border: none;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0%;
+  margin: 0%;
+
+  /* Agrega otros estilos según sea necesario */
+}
+
+.volverInicioV:hover {
+  font-weight: bold;
+  /* Agrega otros estilos al pasar el mouse según sea necesario */
+}
+
+/* Estilos para el título de Ventas */
+h1 {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 20px;
+  background-color: black;
+  color: white;
+  padding: 20px;
+  width: 100%;
+}
+/* Estilos para el contenedor del buscador */
+.buscador-container {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Estilos para el input de búsqueda */
+input[type="text"] {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+/* Estilos para la tabla de ventas */
+.tabla-ventas {
+  position: relative;
+  right: 420px;
+  width: 35%;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Estilos para las celdas de la última columna */
+.tabla-ventas td:last-child {
+  width: 5%;
+}
+
+/* Estilos para las celdas de encabezado */
+.tabla-ventas th {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  font-size: 22px;
+}
+
+/* Estilos para las filas de la tabla */
+.tabla-ventas tr {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+/* Estilos para las celdas de datos */
+.tabla-ventas td {
+  font-size: 20px;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Estilos alternados para filas (opcional) */
+.tabla-ventas tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Hover sobre las filas (opcional) */
+.tabla-ventas tr:hover {
+  background-color: #e0e0e0;
+}
+
+.sacarProducto {
+  background-color: transparent; /* Hacer el fondo transparente */
+  border: none; /* Eliminar el borde */
+  cursor: pointer; /* Cambiar el cursor a pointer para indicar que es interactivo */
+  padding: 0; /* Eliminar el relleno para reducir el espacio alrededor de la cruz */
+  color: black;
+}
+
+.parte-dos {
+  position: absolute;
+  border-radius: 10px;
+  border: solid;
+  top: 260px;
+  left: 550px;
+  font-size: 32px;
+  width: 300px;
+}
+
+.parte-dos p {
+  text-align: center;
+  background-color: red;
+  padding: 10px;
+  margin-top: 0%;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column; /* Añadir esta línea para especificar la dirección de la columna */
+  justify-content: center;
+  /* align-items: column; Eliminar esta línea o corregirla a align-items: flex-start */
+  margin: 20px;
+}
+
+button {
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: large;
+}
+
+/* Estilo para el primer botón (Cobrar) */
+.button-container button:nth-child(1) {
+  background-color: blue;
+  color: white;
+}
+
+/* Estilo para el segundo botón (Exportar Venta) */
+.button-container button:nth-child(2) {
+  background-color: #ff9800; /* Orange */
+  color: white;
+}
+
+/* Estilo para el tercer botón (Fiado) */
+.button-container button:nth-child(3) {
+  background-color: black;
+  color: white;
+}
+
+.tabla-clientes {
+  position: absolute;
+  right: 140px;
+  top: 240px;
+  width: 20%;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.tabla-clientes {
+  background-color: green;
+  color: #fff;
+  padding: 10px;
+  font-size: 22px;
+}
+
+/* Estilos para las filas de la tabla */
+.tabla-clientes tr {
+  border-bottom: 1px solid;
+  padding: 10px;
+}
+/* Agrega estos estilos a tu archivo de estilos CSS */
+.sugerencias-nombres {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+  width: 200px;
+  text-align: center;
+  position: absolute;
+  right: 60px;
+}
+
+.sugerencias-nombres li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.sugerencias-nombres li:hover {
+  background-color: #f0f0f0;
+}

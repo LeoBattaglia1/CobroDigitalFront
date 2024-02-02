@@ -1,0 +1,12 @@
+/* CalendarioCaja.css */
+
+.caja-info {
+  background-color: #c0ffee; /* Color de fondo diferente para la información de caja */
+  padding: 10px; /* Espaciado interno */
+  text-align: center; /* Centrado del contenido */
+}
+
+.caja-column {
+  font-size: 18px; /* Tamaño de fuente más grande para la columna caja */
+  color: #ff5733; /* Color de texto diferente para la columna caja */
+}
