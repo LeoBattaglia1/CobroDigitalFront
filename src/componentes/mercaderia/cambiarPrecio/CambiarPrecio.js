@@ -35,7 +35,10 @@ const CambiarPrecio = ({ handleBackMercaderia, selectedMercaderia }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ Precio: producto.Precio }),
+          body: JSON.stringify({
+            Nombre: producto.Nombre,
+            Precio: producto.Precio,
+          }),
         }
       );
 
@@ -45,6 +48,15 @@ const CambiarPrecio = ({ handleBackMercaderia, selectedMercaderia }) => {
         );
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      // Actualizar los datos del producto
+      const updatedResponse = await fetch(
+        `http://localhost:3000/mercaderia/${selectedMercaderia.codigo}`
+      );
+      const updatedData = await updatedResponse.json();
+
+      // Actualizar el producto seleccionado
+      setProducto(updatedData);
 
       // Limpiar el formulario y volver a la vista de mercadería
       setProducto({
@@ -60,8 +72,19 @@ const CambiarPrecio = ({ handleBackMercaderia, selectedMercaderia }) => {
 
   return (
     <div className="cambiar-precio-container">
-      <h2>Cambiar Precio de {selectedMercaderia.Nombre} </h2>
+      <h2>Cambiar {selectedMercaderia.Nombre} </h2>
       <form onSubmit={handleSubmit}>
+        <label>
+          Nombre:
+          <input
+            type="text"
+            name="Nombre"
+            value={producto.Nombre}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <br />
         <label>
           Precio nuevo:
           <input
@@ -74,10 +97,10 @@ const CambiarPrecio = ({ handleBackMercaderia, selectedMercaderia }) => {
         </label>
         <br />
         <div className="button-container">
+          <button type="submit">Guardar Cambios</button>
           <button type="button" onClick={handleBackMercaderia}>
             Volver
           </button>
-          <button type="submit">Guardar Cambios</button>
         </div>
       </form>
     </div>

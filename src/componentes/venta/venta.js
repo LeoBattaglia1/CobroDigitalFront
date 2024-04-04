@@ -25,8 +25,8 @@ const Ventas = ({ handleBackInicio }) => {
           const producto = await response.json();
           // Agregar el producto seleccionado a la lista de productos
           setProductosSeleccionados((prevProductos) => [
-            ...prevProductos,
             producto,
+            ...prevProductos,
           ]);
           // Limpiar el código de búsqueda después de agregar el producto
           setBusquedaCodigo("");
@@ -81,7 +81,7 @@ const Ventas = ({ handleBackInicio }) => {
     }
   }, [busquedaNombre, todosLosProductos, mostrarSugerencias]);
 
-  //ingresp de precio y guarda el precio con un id igual al valor
+  //ingreso de precio y guarda el precio con un id igual al valor
   const handleKeyPress = async (e) => {
     if (e.key === "Enter" && !isNaN(parseFloat(precioIngresado))) {
       // Validar que el valor ingresado sea un número
@@ -90,7 +90,7 @@ const Ventas = ({ handleBackInicio }) => {
         Nombre: "-",
         Precio: parseFloat(precioIngresado).toFixed(),
       };
-      setProductosSeleccionados([...productosSeleccionados, nuevoProducto]);
+      setProductosSeleccionados([nuevoProducto, ...productosSeleccionados]);
 
       // Realizar una solicitud GET para verificar la existencia del ID
       const nuevoCodigo = nuevoProducto.Precio;
@@ -145,12 +145,13 @@ const Ventas = ({ handleBackInicio }) => {
     setBusquedaCodigo(e.target.value);
   };
 
-  ///para busquedas por nombre
+  ///para búsquedas por nombre
   const handleChangeNombre = (e) => {
     setBusquedaNombre(e.target.value);
     // Mostrar las sugerencias solo si hay algo escrito en el input
     setMostrarSugerencias(e.target.value.trim() !== "");
   };
+
   const handleClickSugerencia = async (nombre) => {
     try {
       // Obtener la lista completa de productos
@@ -158,7 +159,7 @@ const Ventas = ({ handleBackInicio }) => {
 
       if (response.ok) {
         const productos = await response.json();
-        // Filtrar productos que eNombre=-
+        // Filtrar productos que el Nombre no sea "-"
         const productosConNombre = productos.filter((p) => p.Nombre !== "-");
 
         // Buscar el producto correspondiente al nombre
@@ -172,9 +173,9 @@ const Ventas = ({ handleBackInicio }) => {
           );
 
           // Agregar el producto a la tabla de ventas
-          setProductosSeleccionados((prevProductos) => [
-            ...prevProductos,
+          setProductosSeleccionados([
             { ...producto, Nombre: nombre },
+            ...productosSeleccionados,
           ]);
 
           // Limpiar el input y ocultar las sugerencias

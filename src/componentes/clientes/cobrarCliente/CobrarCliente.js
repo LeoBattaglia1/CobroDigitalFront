@@ -187,30 +187,39 @@ const CobrarCliente = ({ handleBack, selectedCliente }) => {
       today.getMonth() + 1
     }/${today.getFullYear()}`;
 
-    // Agregar encabezado
+    // Agregar encabezado en la primera página
     doc.text(`Deuda Registrada al día: ${formattedDate}`, 10, 10);
     doc.text(`Cliente: ${selectedCliente.Nombre}`, 10, 20);
+
+    let currentPage = 1; // Página actual del PDF
+    let yPosition = 30; // Posición inicial para datos
 
     // Iterar sobre los datos de la tabla y agregarlos al PDF
     datosMercaderia.forEach((mercaderia, index) => {
       if (selectedRows[index]) {
-        doc.text(
-          `${mercaderia.fecha} - ${mercaderia.Nombre} - $${mercaderia.precio}`,
-          10,
-          30 + index * 10
-        );
+        const text = `${mercaderia.fecha} - ${mercaderia.Nombre} - $${mercaderia.precio}`;
+        const textHeight = doc.getTextDimensions(text).h;
+
+        if (yPosition + textHeight > 280) {
+          // 280 es el alto máximo de la página (ajustar según sea necesario)
+          doc.addPage(); // Agregar nueva página
+          currentPage++;
+          yPosition = 10; // Reiniciar la posición en la nueva página
+        }
+
+        doc.text(text, 10, yPosition);
+        yPosition += textHeight + 5; // Aumentar la posición para el siguiente elemento
       }
     });
 
-    // Agregar el total al PDF
-    const totalPosition = 30 + datosMercaderia.length * 10;
-    doc.text(`Total: $${calcularTotal()}`, 10, totalPosition);
+    // Agregar el total al PDF en la última página
+    doc.text(`Total: $${calcularTotal()}`, 10, yPosition + 10);
 
-    // Agregar espacio adicional
-    const espacioAdicionalPosition = totalPosition + 10;
+    // Agregar espacio adicional en la última página
+    const espacioAdicionalPosition = yPosition + 30;
     doc.text("", 10, espacioAdicionalPosition); // Línea en blanco como espacio adicional
 
-    // Agregar párrafo adicional
+    // Agregar párrafo adicional en la última página
     const paragraphLines = [
       "ACLARACION: aquellos precios que no muestra el producto corresponden a",
       "mercadería que no está registrada en el sistema como por ejemplo,",
@@ -218,7 +227,6 @@ const CobrarCliente = ({ handleBack, selectedCliente }) => {
       "alimentos para mascotas, etc)",
     ];
 
-    // Iterar sobre las líneas del párrafo adicional y agregarlas al PDF
     paragraphLines.forEach((line, index) => {
       const paragraphPosition = espacioAdicionalPosition + index * 10 + 10;
       doc.text(line, 10, paragraphPosition);

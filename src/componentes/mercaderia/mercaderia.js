@@ -5,9 +5,10 @@ import "jspdf-autotable";
 
 const Mercaderia = ({ handleBackInicio, mostrar, handleSelectMercaderia }) => {
   const [productos, setProductos] = useState([]);
-  const [productosSeleccionados, setProductosSeleccionados] = useState([]);
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+  const [ultimoValorBusqueda, setUltimoValorBusqueda] = useState("");
 
-  const [busqueda, setBusqueda] = useState("");
+  const [busqueda, setBusqueda] = useState(ultimoValorBusqueda);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,23 +38,15 @@ const Mercaderia = ({ handleBackInicio, mostrar, handleSelectMercaderia }) => {
     fetchData();
   }, []);
 
-  const handleSelectFila = (codigo) => {
-    // Clona la lista de productos seleccionados
-    const nuevosSeleccionados = [...productosSeleccionados];
+  useEffect(() => {
+    // Actualizar el estado del campo de búsqueda al montar el componente
+    setBusqueda(ultimoValorBusqueda);
+  }, [ultimoValorBusqueda]);
 
-    // Verifica si el producto ya está seleccionado
-    const index = nuevosSeleccionados.indexOf(codigo);
-
-    // Si ya está seleccionado, lo elimina, de lo contrario, lo agrega
-    if (index !== -1) {
-      nuevosSeleccionados.splice(index, 1);
-    } else {
-      nuevosSeleccionados.push(codigo);
-    }
-
-    // Actualiza la lista de productos seleccionados
-    setProductosSeleccionados(nuevosSeleccionados);
-    console.log("Filas seleccionadas:", nuevosSeleccionados);
+  const handleSelectFila = (producto) => {
+    // Actualizar el producto seleccionado
+    setProductoSeleccionado(producto);
+    handleSelectMercaderia(producto);
   };
 
   const handleBuscarProducto = () => {
@@ -86,7 +79,7 @@ const Mercaderia = ({ handleBackInicio, mostrar, handleSelectMercaderia }) => {
     let rectY = margin;
 
     productos
-      .filter((producto) => productosSeleccionados.includes(producto.codigo))
+      .filter((producto) => producto === productoSeleccionado)
       .forEach((producto, index) => {
         doc.rect(rectX, rectY, rectWidth, rectHeight);
 
@@ -121,21 +114,17 @@ const Mercaderia = ({ handleBackInicio, mostrar, handleSelectMercaderia }) => {
       </button>
       <button
         onClick={() => {
-          const productoSeleccionado = productos.find(
-            (p) => p.codigo === productosSeleccionados[0]
-          );
-          handleSelectMercaderia(productoSeleccionado);
           mostrar("CambiarPrecio");
         }}
         className="edit-button"
-        disabled={productosSeleccionados.length !== 1}
+        disabled={!productoSeleccionado}
       >
-        Cambiar Precio
+        Editar Producto
       </button>
 
       <button
         onClick={() => handleExportarPDF()}
-        disabled={productosSeleccionados.length === 0}
+        disabled={!productoSeleccionado}
       >
         Generar cartel
       </button>
@@ -144,7 +133,9 @@ const Mercaderia = ({ handleBackInicio, mostrar, handleSelectMercaderia }) => {
         type="text"
         placeholder="Buscar"
         className="input"
+        value={busqueda}
         onChange={(e) => setBusqueda(e.target.value)}
+        onBlur={(e) => setUltimoValorBusqueda(e.target.value)}
       />
 
       <table className={`table`}>
@@ -159,14 +150,9 @@ const Mercaderia = ({ handleBackInicio, mostrar, handleSelectMercaderia }) => {
             <tr
               key={producto.codigo}
               className={`${
-                productosSeleccionados.includes(producto.codigo)
-                  ? "selected"
-                  : ""
+                producto === productoSeleccionado ? "selected" : ""
               } ${index % 2 === 0 ? "even" : ""}`}
-              onClick={() => {
-                handleSelectFila(producto.codigo);
-                handleSelectMercaderia(producto);
-              }}
+              onClick={() => handleSelectFila(producto)}
             >
               <td>{producto.Nombre}</td>
               <td>$ {producto.Precio}</td>
