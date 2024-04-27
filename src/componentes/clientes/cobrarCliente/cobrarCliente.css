@@ -2,7 +2,7 @@
 .tabla-cobrar {
   position: relative;
   right: 220px;
-  width: 55%;
+  width: 59%;
   margin-left: auto;
   margin-right: auto;
   border-collapse: collapse;
@@ -41,6 +41,11 @@
   background-color: #f2f2f2;
 }
 
+.tabla-cobrar th:nth-child(3),
+.tabla-cobrar td:nth-child(3) {
+  width: 100px; /* Aquí puedes ajustar el ancho según tus necesidades */
+}
+
 /* Hover sobre las filas (opcional) */
 .tabla-cobrar tr:hover {
   background-color: #e0e0e0;
@@ -50,18 +55,60 @@
   position: absolute;
   border-radius: 10px;
   border: solid;
-  top: 210px;
+  top: 280px;
   font-size: 32px;
   right: 130px;
 }
 
-.cobranza p {
+.cobranza h4 {
   text-align: center;
   background-color: red;
   padding: 10px;
   margin-top: 0%;
 }
 
+.cobranza p {
+  text-align: center;
+  font-size: 22px;
+  padding: 2px;
+  margin-top: 0%;
+}
 .cobranza button {
   padding: 15px;
+}
+
+.selected-row {
+  background-color: yellow !important; /* Asegura que el color de fondo amarillo tenga prioridad */
+}
+
+.resultado-container {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+}
+
+.resultado-container p {
+  margin: 0;
+  margin-left: 20px;
+  font-size: 26px;
+  align-items: center;
+}
+
+.resultado-container label {
+  font-size: 22px;
+}
+
+.buttonPdf {
+  border: solid;
+  border-color: blue;
+  color: blue;
+  background-color: white;
+  margin-left: 90px;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.buttonPdf:hover {
+  background-color: #e0e0e0;
 }

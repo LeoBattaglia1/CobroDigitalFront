@@ -52,7 +52,14 @@ const Ventas = ({ handleBackInicio }) => {
         const response = await fetch("http://localhost:3000/mercaderia");
         if (response.ok) {
           const productos = await response.json();
-          setTodosLosProductos(productos);
+          // Filtrar los productos indeseados
+          const productosFiltrados = productos.filter(
+            (producto) =>
+              producto.Nombre !== "-" &&
+              producto.Nombre !== "Resto de un pago realizado"
+          );
+          // Establecer los productos filtrados en el estado
+          setTodosLosProductos(productosFiltrados);
         } else {
           console.error(
             `Error de red: ${response.status} - ${response.statusText}`
@@ -86,14 +93,14 @@ const Ventas = ({ handleBackInicio }) => {
     if (e.key === "Enter" && !isNaN(parseFloat(precioIngresado))) {
       // Validar que el valor ingresado sea un número
       const nuevoProducto = {
-        codigo: precioIngresado.toString(),
+        codigo: precioIngresado.toString() + "000000",
         Nombre: "-",
         Precio: parseFloat(precioIngresado).toFixed(),
       };
       setProductosSeleccionados([nuevoProducto, ...productosSeleccionados]);
 
       // Realizar una solicitud GET para verificar la existencia del ID
-      const nuevoCodigo = nuevoProducto.Precio;
+      const nuevoCodigo = nuevoProducto.codigo;
       try {
         const checkResponse = await fetch(
           `http://localhost:3000/mercaderia/${nuevoCodigo}`
@@ -120,9 +127,9 @@ const Ventas = ({ handleBackInicio }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            codigo: nuevoCodigo,
+            codigo: precioIngresado.toString() + "000000",
             Nombre: "-",
-            Precio: parseFloat(nuevoCodigo),
+            Precio: parseFloat(precioIngresado).toFixed(),
           }),
         });
 
@@ -154,31 +161,21 @@ const Ventas = ({ handleBackInicio }) => {
 
   const handleClickSugerencia = async (nombre) => {
     try {
-      // Obtener la lista completa de productos
-      const response = await fetch(`http://localhost:3000/mercaderia/`);
+      const response = await fetch(
+        `http://localhost:3000/mercaderia/?Nombre_like=${nombre}&Nombre_ne=Resto%20de%20un%20pago%20realizado&Nombre_ne=-`
+      );
 
       if (response.ok) {
         const productos = await response.json();
-        // Filtrar productos que el Nombre no sea "-"
-        const productosConNombre = productos.filter((p) => p.Nombre !== "-");
 
-        // Buscar el producto correspondiente al nombre
-        const producto = productosConNombre.find((p) => p.Nombre === nombre);
+        const producto = productos.find((p) => p.Nombre === nombre);
 
         if (producto) {
-          // Guardar el ID del producto seleccionado
-          const idProductoSeleccionado = producto.id;
-          console.log(
-            `ID del producto seleccionado: ${idProductoSeleccionado}`
-          );
-
-          // Agregar el producto a la tabla de ventas
           setProductosSeleccionados([
             { ...producto, Nombre: nombre },
             ...productosSeleccionados,
           ]);
 
-          // Limpiar el input y ocultar las sugerencias
           setBusquedaNombre("");
           setSugerenciasNombres([]);
           setMostrarSugerencias(false);
@@ -350,7 +347,7 @@ const Ventas = ({ handleBackInicio }) => {
         const codigosProductos = productosSeleccionados.map(
           (producto) => producto.codigo
         );
-
+        console.log(codigosProductos);
         // Realizar una solicitud POST por cada código de producto
         const promesasPost = codigosProductos.map(async (codigoProducto) => {
           const response = await fetch(
@@ -491,7 +488,10 @@ const Ventas = ({ handleBackInicio }) => {
             ))}
           </ul>
         )}
+        <p>Total productos: {productosSeleccionados.length}</p>{" "}
+        {/* Contador de productos */}
       </div>
+
       <table className="tabla-ventas">
         <thead>
           <tr>

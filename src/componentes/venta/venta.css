@@ -39,6 +39,17 @@ h1 {
 .buscador-container {
   width: 100%;
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+buscador-container input {
+  margin-right: 10px; /* Añade un espacio entre los inputs */
+}
+
+.buscador-container p {
+  font-size: 26px; /* Tamaño de la letra ajustable según tus preferencias */
+  margin-left: 10px; /* Añade un espacio entre el último input y el contador */
 }
 
 /* Estilos para el input de búsqueda */
@@ -189,7 +200,8 @@ button {
   width: 200px;
   text-align: center;
   position: absolute;
-  right: 60px;
+  right: 130px;
+  top: 280px;
 }
 
 .sugerencias-nombres li {
